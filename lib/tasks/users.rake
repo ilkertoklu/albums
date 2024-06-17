@@ -1,5 +1,5 @@
 namespace :users do
-  desc "Import users from Source API"
+  desc 'Import users from Source API'
   task import: :environment do
     require 'net/http'
     require 'json'
@@ -31,6 +31,6 @@ namespace :users do
       )
     end
 
-    puts "Users imported successfully!"
+    puts 'Users imported successfully!'
   end
 end
