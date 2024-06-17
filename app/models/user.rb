@@ -1,4 +1,3 @@
-# Description: User model with validations
 class User < ApplicationRecord
   validates :name, presence: true
   validates :username, presence: true, uniqueness: true
@@ -7,4 +6,8 @@ class User < ApplicationRecord
   validates :phone, presence: true, uniqueness: true
   validates_with AddressValidator
   validates_with CompanyValidator
+
+  def avatar
+    AvatarService.fetch_avatar_url(id)
+  end
 end
