@@ -1,13 +1,29 @@
 class AddressValidator < ActiveModel::Validator
+  REQUIRED_KEYS = %w[street suite city zipcode geo].freeze
+  GEO_KEYS = %w[lat lng].freeze
+
   def validate(record)
-    required_keys = %w[street suite city zipcode geo]
-    missing_keys = required_keys - record.address.keys.map(&:to_s)
-    if missing_keys.any?
-      record.errors.add(:address, "is missing keys: #{missing_keys.join(', ')}")
-    else
-      geo_keys = %w[lat lng]
-      missing_geo_keys = geo_keys - record.address['geo'].keys.map(&:to_s)
-      record.errors.add(:address, "geo is missing keys: #{missing_geo_keys.join(', ')}") if missing_geo_keys.any?
-    end
+    validate_required_keys(record)
+    validate_geo_keys(record) if record.errors[:address].empty?
+  end
+
+  private
+
+  def validate_required_keys(record)
+    missing_keys = REQUIRED_KEYS - record.address.keys.map(&:to_s)
+    add_missing_keys_error(record, missing_keys) if missing_keys.any?
+  end
+
+  def validate_geo_keys(record)
+    missing_geo_keys = GEO_KEYS - record.address['geo'].keys.map(&:to_s)
+    add_missing_geo_keys_error(record, missing_geo_keys) if missing_geo_keys.any?
+  end
+
+  def add_missing_keys_error(record, missing_keys)
+    record.errors.add(:address, "is missing keys: #{missing_keys.join(', ')}")
+  end
+
+  def add_missing_geo_keys_error(record, missing_geo_keys)
+    record.errors.add(:address, "geo is missing keys: #{missing_geo_keys.join(', ')}")
   end
 end
