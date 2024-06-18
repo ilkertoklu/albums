@@ -20,6 +20,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
     - 'test/**/*.rb'
+    - 'lib/tasks/**/*.rake'
 
 Metrics/MethodLength:
   Max: 10
@@ -29,3 +30,4 @@ Style/FrozenStringLiteralComment:
 
 Style/Documentation:
   Enabled: false
+
