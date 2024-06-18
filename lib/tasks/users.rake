@@ -1,36 +1,34 @@
 namespace :users do
   desc 'Import users from Source API'
   task import: :environment do
-    require 'net/http'
+    require 'faraday'
     require 'json'
 
-    url = 'https://jsonplaceholder.typicode.com/users'
-    uri = URI(url)
-    response = Net::HTTP.get(uri)
-    users = JSON.parse(response, symbolize_names: true)
+    response = Faraday.get('https://jsonplaceholder.typicode.com/users')
+    users = JSON.parse(response.body, symbolize_names: true)
 
-    users.each do |user_data|
+    users.each do |user|
       User.create!(
-        name: user_data[:name],
-        username: user_data[:username],
-        email: user_data[:email],
-        phone: user_data[:phone],
-        website: user_data[:website],
+        name: user[:name],
+        username: user[:username],
+        email: user[:email],
+        phone: user[:phone],
+        website: user[:website],
         address: {
-          street: user_data[:address][:street],
-          suite: user_data[:address][:suite],
-          city: user_data[:address][:city],
-          zipcode: user_data[:address][:zipcode],
-          geo: user_data[:address][:geo]
+          street: user[:address][:street],
+          suite: user[:address][:suite],
+          city: user[:address][:city],
+          zipcode: user[:address][:zipcode],
+          geo: user[:address][:geo]
         },
         company: {
-          name: user_data[:company][:name],
-          catchPhrase: user_data[:company][:catchPhrase],
-          bs: user_data[:company][:bs]
+          name: user[:company][:name],
+          catchPhrase: user[:company][:catchPhrase],
+          bs: user[:company][:bs]
         }
       )
     end
 
-    puts 'Users imported successfully!'
+    puts 'Users have been successfully created from API data.'
   end
 end
