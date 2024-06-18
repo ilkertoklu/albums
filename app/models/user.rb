@@ -7,6 +7,9 @@ class User < ApplicationRecord
   validates_with AddressValidator
   validates_with CompanyValidator
 
+  has_many :albums, dependent: :destroy
+  has_many :photos, through: :albums
+
   def avatar
     AvatarService.fetch_avatar_url(id)
   end
