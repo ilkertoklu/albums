@@ -1,0 +1,34 @@
+<div class="container mx-auto p-4 max-w-3xl" data-controller="search">
+  <div class="search-bar my-4 text-center relative max-w-md mx-auto">
+    <input data-search-target="input" type="text" placeholder="Kullanıcı ara" class="p-4 border rounded-full w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-14" data-action="input->search#search">
+    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none" data-search-target="searchIcon">
+      <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+      </svg>
+    </div>
+    <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-4 hidden" data-action="click->search#clearSearch" data-search-target="clearButton">
+      <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <ul class="user-list space-y-4" data-search-target="list">
+    <% @users&.each do |user| %>
+      <li class="user-item flex items-center bg-white p-4 rounded shadow hover:shadow-lg transition duration-300" data-search-target="item" data-username="<%= user.username %>">
+        <div class="user-photo bg-gray-300 w-24 h-24 flex items-center justify-center rounded-lg text-white mr-4 overflow-hidden">
+          <%= image_tag user.avatar, alt: "User photo", class: "rounded-lg w-full h-full object-cover", loading: "lazy" %>
+        </div>
+        <div class="flex-grow">
+          <div class="text-lg font-bold"><%= user.name %></div>
+          <div class="text-gray-600"><%= user.username %></div>
+        </div>
+        <div>
+          <%= link_to edit_user_path(user), class: 'text-gray-600 hover:text-gray-800' do %>
+            <%= image_tag 'edit-icon.png', alt: 'Edit icon', class: 'h-10 w-10' %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <div data-search-target="noResult" class="text-center text-gray-600 mt-4 hidden">Kullanıcı Bulunamadı!</div>
+</div>
