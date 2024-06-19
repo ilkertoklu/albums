@@ -5,13 +5,11 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def edit
-    @user
-  end
+  def edit; end
 
   def update
-    if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+    if @user.update(user_params.merge(address: address_params))
+      redirect_to @user
     else
       render :edit
     end
@@ -24,6 +22,19 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :username, :email, :phone, :address, :avatar)
+    params.require(:user).permit(:name, :username, :email, :phone)
+  end
+
+  def address_params
+    {
+      street: params[:user][:street],
+      suite: params[:user][:suite],
+      city: params[:user][:city],
+      zipcode: params[:user][:zipcode],
+      geo: {
+        lat: params[:user][:geo_lat],
+        lng: params[:user][:geo_lng]
+      }
+    }
   end
 end

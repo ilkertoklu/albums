@@ -65,37 +65,37 @@
             <%= form.telephone_field :phone, class: "w-full p-2 border rounded" %>
           </div>
         </div>
-        
+
         <!-- Address Information Section -->
         <div class="w-1/2">
           <h3 class="text-xl font-semibold mb-2">Adres Bilgileri</h3>
           <div class="mb-4">
-            <%= form.label :address_street, "Sokak", class: "block text-left font-medium" %>
-            <%= form.text_field :address_street, value: @user.address['street'], class: "w-full p-2 border rounded" %>
+            <%= form.label :street, "Sokak", class: "block text-left font-medium" %>
+            <%= form.text_field :street, value: @user.address['street'], class: "w-full p-2 border rounded" %>
           </div>
           <div class="mb-4">
-            <%= form.label :address_suite, "Apartman", class: "block text-left font-medium" %>
-            <%= form.text_field :address_suite, value: @user.address['suite'], class: "w-full p-2 border rounded" %>
+            <%= form.label :suite, "Apartman", class: "block text-left font-medium" %>
+            <%= form.text_field :suite, value: @user.address['suite'], class: "w-full p-2 border rounded" %>
           </div>
           <div class="mb-4">
-            <%= form.label :address_city, "Şehir", class: "block text-left font-medium" %>
-            <%= form.text_field :address_city, value: @user.address['city'], class: "w-full p-2 border rounded" %>
+            <%= form.label :city, "Şehir", class: "block text-left font-medium" %>
+            <%= form.text_field :city, value: @user.address['city'], class: "w-full p-2 border rounded" %>
           </div>
           <div class="mb-4">
-            <%= form.label :address_zipcode, "Posta Kodu", class: "block text-left font-medium" %>
-            <%= form.text_field :address_zipcode, value: @user.address['zipcode'], class: "w-full p-2 border rounded" %>
+            <%= form.label :zipcode, "Posta Kodu", class: "block text-left font-medium" %>
+            <%= form.text_field :zipcode, value: @user.address['zipcode'], class: "w-full p-2 border rounded" %>
           </div>
           <div class="mb-4">
-            <%= form.label :address_lat, "Lat", class: "block text-left font-medium" %>
-            <%= form.text_field :address_lat, value: @user.address['geo']['lat'], class: "w-full p-2 border rounded" %>
+            <%= form.label :geo_lat, "Lat", class: "block text-left font-medium" %>
+            <%= form.text_field :geo_lat, value: @user.address['geo']['lat'], class: "w-full p-2 border rounded" %>
           </div>
           <div class="mb-4">
-            <%= form.label :address_lng, "Lng", class: "block text-left font-medium" %>
-            <%= form.text_field :address_lng, value: @user.address['geo']['lng'], class: "w-full p-2 border rounded" %>
+            <%= form.label :geo_lng, "Lng", class: "block text-left font-medium" %>
+            <%= form.text_field :geo_lng, value: @user.address['geo']['lng'], class: "w-full p-2 border rounded" %>
           </div>
         </div>
       </div>
-      
+
       <div class="flex justify-end mt-4">
         <%= form.submit "Kaydet", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
       </div>
