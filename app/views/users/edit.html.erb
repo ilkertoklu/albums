@@ -1,0 +1,153 @@
+<div class="container mx-auto p-4 relative">
+  <!-- Back to Users Button -->
+  <div class="absolute top-4 right-4">
+    <%= link_to 'Tüm Kullanıcılar', users_path, class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700' %>
+  </div>
+
+  <div class="flex">
+    <!-- User Profile Section -->
+    <div class="w-1/3 p-4 border rounded-lg shadow-lg relative">
+      <div class="flex flex-col items-center">
+        <%= image_tag @user.avatar, alt: "User photo", class: "rounded-full h-32 w-32 mb-4" %>
+        <h2 class="text-xl font-bold text-center"><%= @user.name %></h2>
+        <p class="text-gray-600 text-center">@<%= @user.username %></p>
+        <div class="flex flex-col mt-2 items-start">
+          <p>Email: <%= @user.email %></p>
+          <p>Telefon: <%= @user.phone %></p>
+          <p>Adres: <%= "#{@user.address['suite']}, #{@user.address['street']} St. #{@user.address['city']} City, Zipcode: #{@user.address['zipcode']}, Latitude: #{@user.address['geo']['lat']}, Longitude: #{@user.address['geo']['lng']}"%></p>
+        </div>
+      </div>
+      <button onclick="openEditModal()" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800">
+        <%= image_tag 'edit-icon.png', alt: 'Edit icon', class: 'h-8 w-8' %>
+      </button>
+    </div>
+
+    <!-- Album List Section -->
+    <div class="w-2/3 p-4">
+      <h2 class="text-2xl font-bold mb-4">Albüm Listesi</h2>
+      <div class="space-y-4 overflow-y-auto max-h-96 border p-4 rounded-lg shadow-inner">
+        <% @user.albums.each do |album| %>
+          <div class="flex items-center border p-4 rounded-lg shadow-lg hover:bg-gray-100 cursor-pointer" onclick="showPopup('<%= album.title %>', '<%= album.photos.first.thumbnail_url %>')">
+            <img src="<%= album.photos.first.thumbnail_url %>" alt="album photo" class="rounded-lg h-16 w-16 mr-4">
+            <p class="text-lg font-semibold"><%= album.title %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div id="editUserModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden transition-opacity duration-300 ease-in-out opacity-0">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-2/3 max-h-full overflow-y-auto transform transition-transform duration-300 ease-in-out scale-90">
+    <button class="float-right text-gray-600" onclick="closeEditModal()">X</button>
+    <h2 class="text-2xl font-bold mb-4">Kullanıcı Bilgilerini Düzenle</h2>
+    
+    <%= form_with model: @user, local: true do |form| %>
+      <div class="flex space-x-6">
+        <!-- Personal Information Section -->
+        <div class="w-1/2">
+          <h3 class="text-xl font-semibold mb-2">Kişisel Bilgiler</h3>
+          <div class="mb-4">
+            <%= form.label :name, "Ad", class: "block text-left font-medium" %>
+            <%= form.text_field :name, class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :username, "Kullanıcı Adı", class: "block text-left font-medium" %>
+            <%= form.text_field :username, class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :email, "Email", class: "block text-left font-medium" %>
+            <%= form.email_field :email, class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :phone, "Telefon", class: "block text-left font-medium" %>
+            <%= form.telephone_field :phone, class: "w-full p-2 border rounded" %>
+          </div>
+        </div>
+        
+        <!-- Address Information Section -->
+        <div class="w-1/2">
+          <h3 class="text-xl font-semibold mb-2">Adres Bilgileri</h3>
+          <div class="mb-4">
+            <%= form.label :address_street, "Sokak", class: "block text-left font-medium" %>
+            <%= form.text_field :address_street, value: @user.address['street'], class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :address_suite, "Apartman", class: "block text-left font-medium" %>
+            <%= form.text_field :address_suite, value: @user.address['suite'], class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :address_city, "Şehir", class: "block text-left font-medium" %>
+            <%= form.text_field :address_city, value: @user.address['city'], class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :address_zipcode, "Posta Kodu", class: "block text-left font-medium" %>
+            <%= form.text_field :address_zipcode, value: @user.address['zipcode'], class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :address_lat, "Lat", class: "block text-left font-medium" %>
+            <%= form.text_field :address_lat, value: @user.address['geo']['lat'], class: "w-full p-2 border rounded" %>
+          </div>
+          <div class="mb-4">
+            <%= form.label :address_lng, "Lng", class: "block text-left font-medium" %>
+            <%= form.text_field :address_lng, value: @user.address['geo']['lng'], class: "w-full p-2 border rounded" %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex justify-end mt-4">
+        <%= form.submit "Kaydet", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Popup Modal -->
+<div id="popupModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden transition-opacity duration-300 ease-in-out opacity-0">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-1/3 transform transition-transform duration-300 ease-in-out scale-90">
+    <button class="float-right text-gray-600" onclick="closePopup()">X</button>
+    <div class="text-center">
+      <img id="popupAlbumPhoto" src="https://via.placeholder.com/100" alt="album photo" class="rounded-full h-32 w-32 mb-4 mx-auto">
+      <p id="popupAlbumTitle" class="text-xl font-bold"></p>
+      <p>Album bağlantısı: <a id="popupAlbumLink" href="#" target="_blank" class="text-blue-600 underline">Link</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openEditModal() {
+    const modal = document.getElementById('editUserModal');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0', 'scale-90');
+    }, 10);  // Slight delay to trigger animation
+  }
+
+  function closeEditModal() {
+    const modal = document.getElementById('editUserModal');
+    modal.classList.add('opacity-0', 'scale-90');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);  // Duration of the animation
+  }
+
+  function showPopup(title, image) {
+    const modal = document.getElementById('popupModal');
+    document.getElementById('popupAlbumTitle').innerText = title;
+    document.getElementById('popupAlbumLink').href = image;
+    document.getElementById('popupAlbumPhoto').src = image;
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0', 'scale-90');
+    }, 10);  // Slight delay to trigger animation
+  }
+
+  function closePopup() {
+    const modal = document.getElementById('popupModal');
+    modal.classList.add('opacity-0', 'scale-90');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);  // Duration of the animation
+  }
+</script>
