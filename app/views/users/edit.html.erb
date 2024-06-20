@@ -12,9 +12,9 @@
         <h2 class="text-xl font-bold text-center"><%= @user.name %></h2>
         <p class="text-gray-600 text-center">@<%= @user.username %></p>
         <div class="flex flex-col mt-2 items-start">
-          <p>Email: <%= @user.email %></p>
-          <p>Telefon: <%= @user.phone %></p>
-          <p>Adres: <%= "#{@user.address['suite']}, #{@user.address['street']} St. #{@user.address['city']} City, Zipcode: #{@user.address['zipcode']}, Latitude: #{@user.address['geo']['lat']}, Longitude: #{@user.address['geo']['lng']}"%></p>
+          <p><strong>Email:</strong> <%= @user.email %></p>
+          <p><strong>Telefon:</strong> <%= @user.phone %></p>
+          <p><strong>Adres:</strong> <%= "#{@user.address['suite']}, #{@user.address['street']} St. #{@user.address['city']} City, Zipcode: #{@user.address['zipcode']}, Latitude: #{@user.address['geo']['lat']}, Longitude: #{@user.address['geo']['lng']}"%></p>
         </div>
       </div>
       <button onclick="openEditModal()" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800">
@@ -28,7 +28,7 @@
       <div class="space-y-4 overflow-y-auto max-h-96 border p-4 rounded-lg shadow-inner">
         <% @user.albums.each do |album| %>
           <div class="flex items-center border p-4 rounded-lg shadow-lg hover:bg-gray-100 cursor-pointer" onclick="showPopup('<%= album.title %>', '<%= album.photos.first.thumbnail_url %>')">
-            <img src="<%= album.photos.first.thumbnail_url %>" alt="album photo" class="rounded-lg h-16 w-16 mr-4">
+            <%= image_tag album.photos.first.thumbnail_url, alt: "Album photo", class: "rounded-lg h-16 w-16 mr-4" %>
             <p class="text-lg font-semibold"><%= album.title %></p>
           </div>
         <% end %>
