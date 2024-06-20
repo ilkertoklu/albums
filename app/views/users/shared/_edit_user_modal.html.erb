@@ -1,0 +1,49 @@
+<div id="editUserModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden transition-opacity duration-300 ease-in-out opacity-0">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-2/3 max-h-full overflow-y-auto transform transition-transform duration-300 ease-in-out scale-90">
+    <button class="float-right text-gray-600" onclick="closeEditModal()">X</button>
+    <h2 class="text-2xl font-bold mb-4">Kullanıcı Bilgilerini Düzenle</h2>
+
+    <%= form_with model: @user, local: true do |form| %>
+      <div class="flex space-x-6">
+        <!-- Address Information Section -->
+        <div class="w-1/3">
+          <h3 class="text-xl font-semibold mb-2">Adres Bilgileri</h3>
+          <%= render 'users/shared/address_fields', form: form, user: @user %>
+        </div>
+
+        <!-- Personal Information Section -->
+        <div class="w-1/3">
+          <h3 class="text-xl font-semibold mb-2">Kişisel Bilgiler</h3>
+          <%= render 'users/shared/personal_fields', form: form %>
+        </div>
+
+        <!-- Company Information Section -->
+        <div class="w-1/3">
+          <h3 class="text-xl font-semibold mb-2">Şirket Bilgileri</h3>
+          <%= render 'users/shared/company_fields', form: form, user: @user %>
+        </div>
+      </div>
+      <div class="flex justify-end mt-4">
+        <%= form.submit "Kaydet", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function openEditModal() {
+    const modal = document.getElementById('editUserModal');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0', 'scale-90');
+    }, 10);  // Slight delay to trigger animation
+  }
+
+  function closeEditModal() {
+    const modal = document.getElementById('editUserModal');
+    modal.classList.add('opacity-0', 'scale-90');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);  // Duration of the animation
+  }
+</script>

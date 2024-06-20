@@ -1,0 +1,12 @@
+<div class="mb-4">
+  <%= form.label :company_name, "Şirket Adı", class: "block text-left font-medium" %>
+  <%= form.text_field :company_name, value: user.company['name'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :company_catchPhrase, "Şirket Sloganı", class: "block text-left font-medium" %>
+  <%= form.text_field :company_catchPhrase, value: user.company['catchPhrase'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :company_bs, "Şirket İş Alanı", class: "block text-left font-medium" %>
+  <%= form.text_field :company_bs, value: user.company['bs'], class: "w-full p-2 border rounded" %>
+</div>

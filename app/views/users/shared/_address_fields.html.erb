@@ -1,0 +1,24 @@
+<div class="mb-4">
+  <%= form.label :address_street, "Sokak", class: "block text-left font-medium" %>
+  <%= form.text_field :address_street, value: user.address['street'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :address_suite, "Apartman", class: "block text-left font-medium" %>
+  <%= form.text_field :address_suite, value: user.address['suite'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :address_city, "Şehir", class: "block text-left font-medium" %>
+  <%= form.text_field :address_city, value: user.address['city'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :address_zipcode, "Posta Kodu", class: "block text-left font-medium" %>
+  <%= form.text_field :address_zipcode, value: user.address['zipcode'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :address_geo_lat, "Lat", class: "block text-left font-medium" %>
+  <%= form.text_field :address_geo_lat, value: user.address['geo']['lat'], class: "w-full p-2 border rounded" %>
+</div>
+<div class="mb-4">
+  <%= form.label :address_geo_lng, "Lng", class: "block text-left font-medium" %>
+  <%= form.text_field :address_geo_lng, value: user.address['geo']['lng'], class: "w-full p-2 border rounded" %>
+</div>
