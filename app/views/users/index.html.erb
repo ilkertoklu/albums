@@ -1,4 +1,4 @@
-<div class="container mx-auto p-4 max-w-3xl" data-controller="search">
+<div class="container mx-auto p-3 max-w-3xl" data-controller="search">
   <div class="search-bar my-4 text-center relative max-w-md mx-auto">
     <input data-search-target="input" type="text" placeholder="Kullanıcı ara" class="p-4 border rounded-full w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-14" data-action="input->search#search">
     <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none" data-search-target="searchIcon">
@@ -12,7 +12,7 @@
       </svg>
     </button>
   </div>
-  <ul class="user-list space-y-4" data-search-target="list">
+  <div class="user-list space-y-4 max-h-96 overflow-y-auto border-grey shadow-inner max-h-[32rem] rounded-lg overflow-y-scroll border border-gray-300 shadow-lg" data-search-target="list">
     <% @users&.each do |user| %>
       <li class="user-item flex items-center bg-white p-4 rounded shadow hover:shadow-lg transition duration-300" data-search-target="item" data-username="<%= user.username %>">
         <div class="user-photo bg-gray-300 w-24 h-24 flex items-center justify-center rounded-lg text-white mr-4 overflow-hidden">
@@ -29,6 +29,6 @@
         </div>
       </li>
     <% end %>
-  </ul>
+  </div>
   <div data-search-target="noResult" class="text-center text-gray-600 mt-4 hidden">Kullanıcı Bulunamadı!</div>
 </div>
